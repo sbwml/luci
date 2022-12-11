@@ -666,25 +666,11 @@ return view.extend({
 		return node;
 	},
 
-	checkLegacyRules: function(ipt4save, ipt6save) {
-		if (ipt4save.match(/\n-A /) || ipt6save.match(/\n-A /)) {
-			ui.addNotification(_('Legacy rules detected'), [
-				E('p', _('There are legacy iptables rules present on the system. Mixing iptables and nftables rules is discouraged and may lead to incomplete traffic filtering.')),
-				E('button', {
-					'class': 'btn cbi-button',
-					'click': function() { location.href = 'nftables/iptables' }
-				}, _('Open iptables rules overview…'))
-			], 'warning');
-		}
-	},
-
 	render: function(data) {
 		var view = E('div'),
 		    nft = data[0],
 		    ipt = data[1],
 		    ipt6 = data[2];
-
-		this.checkLegacyRules(ipt, ipt6);
 
 		if (!Array.isArray(nft.nftables))
 			return E('em', _('No nftables ruleset loaded.'));
